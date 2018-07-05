@@ -1,13 +1,12 @@
 const express = require('express');
+var fs = require('fs');
+var data = fs.readFileSync('words.json');
+var words = JSON.parse(data);
+
+console.log(words);
+
 const app = express();
-
 const PORT = 3000;
-
-var words = {
-	rainbow: 5,
-	happy: 3,
-	doom: -3
-};
 
 const listening = () => console.log("Listening on port: " + PORT);
 
@@ -36,11 +35,22 @@ function addWords(req, res) {
 		}
 
 		words[word] = score;
+		var newData = JSON.stringify(words, undefined, 2);
+
+		fs.writeFile('words.json', newData, (err) => {
+			if (err) {
+			return console.log("Error found: " + err);
+			}
+			console.log("Word '" + word + "' saved!")
+
+		});
 		
+
 		reply = {
-		msg: 'Thank you for your word!'
-		};
-		
+			word,
+			score,
+			status: 'success'
+			};
 		
 		res.send(reply);
 				
