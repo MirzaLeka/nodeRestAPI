@@ -25,31 +25,12 @@ $(document).ready(() => {
     });
 
     function submitWord() {
-        var word = $("input[type='text']").val();
-        var score = $("input[type='number']").val();
 
-/*
-  $.ajax({
-    type: 'POST',
-    url: `/add/TM/87`,
-     success: function() {
-      console.log("Hello world!");
-    }
-        });
-
-       */
-         }
-
-    /*
-        // define size variable
-        Object.size = function(obj) {
-            var size = 0, key;
-            for (key in obj) {
-                if (obj.hasOwnProperty(key)) size++;
-            }
-            return size;
-        };
         
-        // Get the size of an object
-        var size = Object.size(data);
-        */
+ var word = $("input[type='text']").val();
+ var score = $("input[type='number']").val();
+
+        window.open('/add/' + word + '/' + score);
+
+    }
+
