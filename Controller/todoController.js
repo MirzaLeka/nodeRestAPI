@@ -14,37 +14,59 @@ item: String
 
 // Creating a Todo Model based of previously created schema
 
-var ToDo = mongoose.model('Todo', todoSchema);
-var itemOne = ToDo({item: "buy flowers"}).save((err) => {
-if (err) {
-    return console.log(err);
-}
-console.log("Item saved!");
+var Todo = mongoose.model('Todo', todoSchema);
+// var itemOne = ToDo({item: "buy flowers"}).save((err) => {
+// if (err) {
+//     return console.log(err);
+// }
+// console.log("Item saved!");
 
-});
+// });
 
-let data = [
-    {item: "get milk"},
-    {item: "walk a dog"},
-    {item: "kick some ass"}
-];
+// let data = [
+//     {item: "get milk"},
+//     {item: "walk a dog"},
+//     {item: "kick some ass"}
+// ];
 
 module.exports = (app) => {
 
+// Get data from mongoDB and pass it to the view
+// Data we are getting is a Todo, which connected to DB
+
+
 app.get('/todo', (req, res) => {
+
+Todo.find({}, (err,data)=>{
+if (err) {
+    return console.log(err);
+}
 res.render('todo', {todos: data});
 });
 
-app.post('/todo', urlencodedParser, (req, res) => {
-data.push(req.body);
-res.json(data);
 });
 
+// Get data from the view and add it to the mongoDB
+
+app.post('/todo', urlencodedParser, (req, res) => {
+
+let newTodo = Todo(req.body).save((err, data) => {
+if (err) throw err;
+res.json(data);
+}); 
+
+});
+
+// Delete the requested item from mongoDB
+
 app.delete('/todo/:item', (req, res) => {
-    data = data.filter(function(todo) {
-        return todo.item.replace(/ /g, '-' ) != req.params.item;
-    });
-    res.json(data);
+
+        Todo.find({item: req.params.item.replace(/\-/g, " ")}).remove((err, data) => {
+            if (err) throw err;
+            res.json(data);
+        });
+      
+
 });
 
 
