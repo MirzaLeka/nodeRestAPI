@@ -5,6 +5,8 @@ $(document).ready(() => {
     url: '/all',
     success: function(data) {
 
+        console.log("DATA: " + JSON.stringify(data, undefined, 2));
+
         let keys = Object.keys(data);
         let values = Object.values(data);
 
@@ -30,7 +32,24 @@ $(document).ready(() => {
  var word = $("input[type='text']").val();
  var score = $("input[type='number']").val();
 
-        window.open('/add/' + word + '/' + score);
+ const data = {
+     word,
+     score
+ };
+
+ //window.open('/all');
+
+    //    window.open('/add/' + word + '/' + score);
+
+    $.ajax({
+        type: "GET",
+        url: `/add/${data.word}/${data.score}`,
+        data: JSON.stringify(data),
+        success: function (data) {
+            console.log(data);
+            location.reload();
+        }
+    });
 
     }
 

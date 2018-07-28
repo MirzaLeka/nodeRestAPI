@@ -1,4 +1,8 @@
 {
+  "2": 2,
+  "3": 3,
+  "23": 11,
+  "123": 123321,
   "object": 4,
   "agent": 17,
   "bel": 2,
@@ -12,5 +16,8 @@
   "es": 2015,
   "hello": 141,
   "heyThere": 2222,
-  "Mickey": 7
+  "Mickey": 7,
+  "MIRZA": 24,
+  "POST using type GET": 1337,
+  "joe": 19
 }
