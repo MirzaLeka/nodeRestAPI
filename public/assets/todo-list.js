@@ -1,21 +1,9 @@
 $(document).ready(function(){
 
   $('form').on('submit', function(){
-
-      var item = $('form input');
-      var todo = {item: item.val()};
-
-      $.ajax({
-        type: 'POST',
-        url: '/todo',
-        data: todo,
-        success: function(data){
-          //do something with the data via front-end framework
-          location.reload();
-        }
-      });
-
-      return false;
+    
+    submitToDB();  
+    return false;
 
   });
 
@@ -32,3 +20,30 @@ $(document).ready(function(){
   });
 
 });
+
+
+
+$("input").keyup(function(event){
+  if(event.keyCode == 13){
+    submitToDB();
+  }
+});
+
+
+
+function submitToDB() {
+
+  var item = $('form input');
+  var todo = {item: item.val()};
+
+  $.ajax({
+    type: 'POST',
+    url: '/todo',
+    data: todo,
+    success: function(data){
+      //do something with the data via front-end framework
+      location.reload();
+    }
+  });
+
+}
